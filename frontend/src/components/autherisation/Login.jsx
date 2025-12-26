@@ -12,7 +12,7 @@ import { Loader2 } from 'lucide-react'
 import { toast } from "sonner";
 
 
-const USER_API_END_POINT = "http://localhost:8000/api/v1/user";
+const USER_API_END_POINT = "https://job-portal-ec1m.onrender.com/api/v1/user";
 
 const Login = () => {
     const navigate = useNavigate();

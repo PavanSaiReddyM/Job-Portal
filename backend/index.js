@@ -19,7 +19,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: "https://job-portal-ec1m.onrender.com",
   credentials: true,
 };
 
