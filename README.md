@@ -100,4 +100,8 @@ Backend:
 ```bash
 http://localhost:8000  
 ```
+## 🤝 Contributors
+
+- **[Pavan Sai Reddy M](https://github.com/PavanSaiReddyM)**
+- **[Anil Kumar](https://github.com/anilkumar0509)** 
 
