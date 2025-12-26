@@ -7,7 +7,7 @@ import userroute from "./routes/user.route.js";
 import companyroute from "./routes/company.route.js";
 import jobRoute from "./routes/job.route.js";
 import applicationroute from "./routes/application.route.js";
-
+import path from 'path'
 dotenv.config();
 
 const app = express();
@@ -18,9 +18,10 @@ const corsOptions = {
     credentials: true 
 };
 
+const __dirname=path.resolve();
+
+
 app.use(cors(corsOptions));
-
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -38,6 +39,11 @@ app.use("/api/v1/user", userroute);
 app.use("/api/v1/company", companyroute);
 app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applicationroute);
+
+app.use(express.static(path.join(__dirname,"/frontend/dist")))
+app.use((req, res) => {
+    res.sendFile(path.resolve(__dirname, "frontend/dist/index.html"));
+});
 
 
 const port = process.env.PORT || 3000;
