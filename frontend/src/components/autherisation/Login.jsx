@@ -5,7 +5,7 @@ import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { RadioGroup } from "../ui/radio-group";
 import Navbar from "../shared/Navbar";
-import { setLoading, setUser } from '@/redux/authSlice'
+import { setLoading, setUser } from '../../redux/authslice'
 import { Button } from "../ui/button";
 import { Loader2 } from 'lucide-react'
  import { useDispatch, useSelector } from 'react-redux';

@@ -11,7 +11,7 @@ import axios from "axios";
 import { USER_API_END_POINT } from "../utilis/(); constant";
 import { Content } from "@radix-ui/react-popover";
 import { Loader2 } from "lucide-react";
-import { setLoading, setUser } from '@/redux/authSlice'
+import { setLoading, setUser } from '../../redux/authslice'
  import { useDispatch, useSelector } from 'react-redux';
  import {toast} from "sonner";
 const Signup = () => {
