@@ -18,7 +18,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import axios from "axios";
-import { USER_API_END_POINT } from "../utilis/constant";
+import { USER_API_END_POINT } from "../utilis/(); constant"
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "../../redux/authslice";
 import { toast } from "sonner";
