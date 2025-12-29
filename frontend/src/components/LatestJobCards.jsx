@@ -10,13 +10,30 @@ import {
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { toast } from "sonner";
 
 const LatestJobCards = ({ job }) => {
   const navigate = useNavigate();
+  const { user } = useSelector((store) => store.auth); 
+
+  const isAuthenticated = Boolean(user);
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
+  };
+
+  const handleApply = (e) => {
+    e.stopPropagation();
+
+    if (!isAuthenticated) {
+      toast.error("Please login to apply for this job");
+      navigate("/login");
+      return;
+    }
+
+    navigate(`/jobs/description/${job._id}`);
   };
 
   return (
@@ -71,7 +88,7 @@ const LatestJobCards = ({ job }) => {
         </div>
       </div>
 
-      {/* Action */}
+      {/* Actions */}
       <div className="flex items-center justify-between">
         <Button
           variant="ghost"
@@ -84,11 +101,13 @@ const LatestJobCards = ({ job }) => {
 
         <Button
           size="sm"
-          className="rounded-xl group-hover:shadow-elegant"
-          onClick={(e) => {
-            e.stopPropagation();
-            navigate(`/jobs/description/${job._id}`);
-          }}
+          className={`rounded-xl ${
+            !isAuthenticated
+              ? "opacity-50 cursor-not-allowed"
+              : "group-hover:shadow-elegant"
+          }`}
+          disabled={!isAuthenticated}
+          onClick={handleApply}
         >
           Apply Now
           <ArrowUpRight className="w-4 h-4 ml-1" />
@@ -96,9 +115,11 @@ const LatestJobCards = ({ job }) => {
       </div>
 
       {/* Hover glow */}
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary/5 to-accent/5 
-                      opacity-0 group-hover:opacity-100 transition-opacity 
-                      duration-300 pointer-events-none" />
+      <div
+        className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary/5 to-accent/5 
+                   opacity-0 group-hover:opacity-100 transition-opacity 
+                   duration-300 pointer-events-none"
+      />
     </motion.div>
   );
 };

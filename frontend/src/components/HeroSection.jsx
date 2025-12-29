@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "./ui/button";
-import { Search, Sparkles, TrendingUp, Users } from "lucide-react";
+import { Search, Sparkles } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { setSearchedQuery } from "../redux/jobslice";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +22,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative text-center pt-32 pb-20 px-4 sm:px-6 overflow-hidden">
+    <section className="relative text-center pt-32 pb-16 px-4 sm:px-6 overflow-hidden">
       {/* Background decorations */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/20 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
@@ -92,41 +92,10 @@ const HeroSection = () => {
                 if (e.key === "Enter") searchJobHandler();
               }}
             />
-            <Button
-              onClick={searchJobHandler}
-              className="rounded-xl px-6"
-            >
+            <Button onClick={searchJobHandler} className="rounded-xl px-6">
               Search
             </Button>
           </div>
-        </motion.div>
-
-        {/* Stats */}
-        <motion.div
-          className="flex flex-wrap justify-center gap-8 mt-8"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-        >
-          {[
-            { icon: TrendingUp, label: "Jobs Posted", value: "10K+" },
-            { icon: Users, label: "Active Users", value: "50K+" },
-            { icon: Sparkles, label: "Companies", value: "2K+" },
-          ].map((stat, index) => (
-            <div key={index} className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                <stat.icon className="w-5 h-5 text-primary" />
-              </div>
-              <div className="text-left">
-                <p className="text-2xl font-bold text-foreground">
-                  {stat.value}
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  {stat.label}
-                </p>
-              </div>
-            </div>
-          ))}
         </motion.div>
       </motion.div>
     </section>
