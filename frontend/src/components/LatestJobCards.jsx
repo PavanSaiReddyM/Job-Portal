@@ -1,46 +1,106 @@
 import React from "react";
+import { motion } from "framer-motion";
+import {
+  MapPin,
+  Clock,
+  DollarSign,
+  Building2,
+  ArrowUpRight,
+} from "lucide-react";
 import { Badge } from "./ui/badge";
-import { useNavigate } from "react-router";
+import { Button } from "./ui/button";
+import { useNavigate } from "react-router-dom";
 
-const LatestJobCards = ({job}) => {
-    const navigate=useNavigate();
-    return (
-        <div onClick={()=>navigate(`/jobs/description/${job._id}`)} className="p-4 sm:p-6 rounded-lg shadow-sm bg-background border border-border cursor-pointer 
-                        hover:shadow-md hover:bg-surface-hover hover:border-brand-primary/20 
-                        transition-all duration-200 transform hover:-translate-y-1 
-                        w-full max-w-sm sm:max-w-md lg:max-w-lg">
-            
-           
-            <div className="mb-3">
-                <h1 className="font-semibold text-base sm:text-lg text-text-primary">{job?.company?.name}</h1>
-                <p className="text-xs sm:text-sm text-text-secondary">{job?.location}</p>
-            </div>
+const LatestJobCards = ({ job }) => {
+  const navigate = useNavigate();
 
-         
-            <div className="mb-4">
-                <h1 className="font-bold text-lg sm:text-xl text-text-primary mb-2">{job?.title}</h1>
-                <p className="text-sm sm:text-base text-text-secondary line-clamp-2">
-                  {job?.description}
-                </p>
-            </div>
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
 
-           
-            <div className="flex flex-wrap items-center gap-2">
-                <Badge className="text-brand-primary font-semibold bg-brand-primary/10 hover:bg-brand-primary/20 transition-colors" 
-                       variant="secondary">
-                    {job?.position}
-                </Badge>
-                <Badge className="text-text-accent font-semibold bg-text-accent/10 hover:bg-text-accent/20 transition-colors border-orange-200 text-orange-600" 
-                       variant="secondary">
-                    {job?.jobType}
-                </Badge>
-                <Badge className="text-brand-secondary font-semibold bg-brand-secondary/10 hover:bg-brand-secondary/20 transition-colors  border-blue-200 text-blue-600 " 
-                       variant="secondary">
-                    {job?.salary}LPA
-                </Badge>
-            </div>
+  return (
+    <motion.div
+      variants={itemVariants}
+      whileHover={{ y: -6 }}
+      onClick={() => navigate(`/jobs/description/${job._id}`)}
+      className="group relative p-6 rounded-2xl bg-card border border-border/50 
+                 hover:border-primary/30 hover:shadow-elegant 
+                 transition-all duration-300 cursor-pointer"
+    >
+      {/* Header */}
+      <div className="flex items-start justify-between mb-4">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 
+                          flex items-center justify-center">
+            <Building2 className="w-6 h-6 text-primary" />
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1">
+              {job?.title}
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              {job?.company?.name}
+            </p>
+          </div>
         </div>
-    )
-}
+
+        <Badge
+          variant="secondary"
+          className="bg-primary/10 text-primary border-0 text-xs"
+        >
+          {job?.jobType || job?.type}
+        </Badge>
+      </div>
+
+      {/* Details */}
+      <div className="space-y-2 mb-6">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <MapPin className="w-4 h-4" />
+          <span>{job?.location}</span>
+        </div>
+
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <DollarSign className="w-4 h-4" />
+          <span>{job?.salary} LPA</span>
+        </div>
+
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Clock className="w-4 h-4" />
+          <span>Recently posted</span>
+        </div>
+      </div>
+
+      {/* Action */}
+      <div className="flex items-center justify-between">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="text-muted-foreground hover:text-foreground"
+          onClick={(e) => e.stopPropagation()}
+        >
+          Save for later
+        </Button>
+
+        <Button
+          size="sm"
+          className="rounded-xl group-hover:shadow-elegant"
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(`/jobs/description/${job._id}`);
+          }}
+        >
+          Apply Now
+          <ArrowUpRight className="w-4 h-4 ml-1" />
+        </Button>
+      </div>
+
+      {/* Hover glow */}
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary/5 to-accent/5 
+                      opacity-0 group-hover:opacity-100 transition-opacity 
+                      duration-300 pointer-events-none" />
+    </motion.div>
+  );
+};
 
 export default LatestJobCards;

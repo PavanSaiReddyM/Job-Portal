@@ -1,50 +1,102 @@
 import React from "react";
-import { Carousel, CarouselContent, CarouselNext, CarouselItem, CarouselPrevious } from "./ui/carousel";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselNext,
+  CarouselItem,
+  CarouselPrevious,
+} from "./ui/carousel";
 import { Button } from "./ui/button";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { setSearchedQuery } from "../redux/jobslice";
+import { motion } from "framer-motion";
+import {
+  Code,
+  Database,
+  BarChart3,
+  Palette,
+  Layers,
+} from "lucide-react";
 
-const category = [
-  "Frontend Engineer",
-  "Backend Engineer",
-  "Data Scientist",
-  "Graphic Designer",
-  "FullStack Developer"
+const categories = [
+  { name: "Frontend Engineer", icon: Code },
+  { name: "Backend Engineer", icon: Database },
+  { name: "Data Scientist", icon: BarChart3 },
+  { name: "Graphic Designer", icon: Palette },
+  { name: "FullStack Developer", icon: Layers },
 ];
 
 const CategoryCarousel = () => {
-  const dispatch=useDispatch();
-  const navigate=useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const searchJobHandler = (query) => {
-          dispatch(setSearchedQuery(query));
-          navigate("/browse");
-      }
+    dispatch(setSearchedQuery(query));
+    navigate("/browse");
+  };
+
   return (
-    <div className="my-20">
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-text-primary mb-2">Browse by Category</h2>
-        <p className="text-text-secondary">Explore jobs across different categories</p>
-      </div>
-      
-      <Carousel className="w-full max-w-4xl mx-auto">
-        <CarouselContent className="-ml-2 md:-ml-4">
-          {category.map((cat, index) => (
-            <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
-              <Button 
-              onClick={()=>searchJobHandler(cat)}
-                variant="outline" 
-                className="w-full cursor-pointer rounded-full border-brand-primary/20 text-text-primary hover:bg-brand-primary hover:text-white hover:border-brand-primary transition-all duration-200"
+    <motion.section
+      className="py-20 px-4 sm:px-6"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3">
+            Browse by{" "}
+            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Category
+            </span>
+          </h2>
+          <p className="text-muted-foreground text-lg">
+            Explore jobs across different categories
+          </p>
+        </div>
+
+        {/* Carousel */}
+        <Carousel className="w-full">
+          <CarouselContent className="-ml-3">
+            {categories.map((cat, index) => (
+              <CarouselItem
+                key={index}
+                className="pl-3 basis-full sm:basis-1/2 lg:basis-1/3"
               >
-                {cat}
-              </Button>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious className="text-brand-primary border-brand-primary/20 hover:bg-brand-primary hover:text-white cursor-pointer" />
-        <CarouselNext className="text-brand-primary border-brand-primary/20 hover:bg-brand-primary hover:text-white cursor-pointer" />
-      </Carousel>
-    </div>
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <Button
+                    onClick={() => searchJobHandler(cat.name)}
+                    variant="outline"
+                    className="w-full h-auto py-6 px-4 rounded-2xl border-border/50 bg-card/50 backdrop-blur-sm 
+                               hover:bg-primary hover:text-primary-foreground 
+                               hover:border-primary hover:shadow-elegant 
+                               transition-all duration-300 group"
+                  >
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="w-12 h-12 rounded-xl bg-primary/10 group-hover:bg-primary-foreground/20 flex items-center justify-center transition-colors">
+                        <cat.icon className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
+                      </div>
+                      <span className="font-medium">{cat.name}</span>
+                    </div>
+                  </Button>
+                </motion.div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+
+          <CarouselPrevious className="hidden sm:flex -left-12 border-border/50 bg-card/80 backdrop-blur-sm 
+                                      hover:bg-primary hover:text-primary-foreground hover:border-primary" />
+          <CarouselNext className="hidden sm:flex -right-12 border-border/50 bg-card/80 backdrop-blur-sm 
+                                  hover:bg-primary hover:text-primary-foreground hover:border-primary" />
+        </Carousel>
+      </div>
+    </motion.section>
   );
 };
 
