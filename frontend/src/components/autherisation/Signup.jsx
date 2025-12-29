@@ -79,14 +79,16 @@ const Signup = () => {
     <div className="min-h-screen gradient-hero">
       <Navbar />
 
-      <main className="container py-10 px-4">
+    <main className="container px-4 pt-24 pb-10">
+
+
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="mx-auto max-w-md"
         >
           {/* Header */}
-          <div className="text-center mb-8">
+          <div className="text-center mt-6 mb-8">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm mb-4">
               <Sparkles className="h-4 w-4" />
               Create your account
